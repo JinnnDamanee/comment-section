@@ -29,11 +29,11 @@ const Home: NextPage<{ comments: commentProp[], currentUser: userProp }> = ({ co
 }
 
 export async function getServerSideProps() {
-  const res = await axios.get('http://localhost:3000/api/comment')
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/comment`)
   const comments: CommentProp[] = res.data
   // console.log(comments);
 
-  const resUser = await axios.get('http://localhost:3000/api/user/currentUser')
+  const resUser = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/currentUser`)
   const currentUser = resUser.data
 
   return {

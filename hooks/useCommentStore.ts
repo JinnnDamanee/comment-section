@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 const createPost = (content: string, id: number, setContent: Dispatch<string>) => {
     if (content) {
-        axios.post('http://localhost:3000/api/comment', { content, userId: id, replyTo: null })
+        axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/comment`, { content, userId: id, replyTo: null })
             .then(res => {
                 Router.push('/')
                 setContent('')
@@ -16,7 +16,7 @@ const createPost = (content: string, id: number, setContent: Dispatch<string>) =
 }
 const replyPost = (content: string, id: number, setContent: Dispatch<string>, setShowReply: Dispatch<boolean>, replyTo: number) => {
     if (content) {
-        axios.post('http://localhost:3000/api/comment', { content, userId: id, replyTo })
+        axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/comment`, { content, userId: id, replyTo })
             .then(res => {
                 Router.push('/')
                 setContent('')
@@ -28,7 +28,7 @@ const replyPost = (content: string, id: number, setContent: Dispatch<string>, se
     }
 }
 const deleteComment = async (commentId: number) => {
-    axios.delete(`http://localhost:3000/api/comment/${commentId}`)
+    axios.delete(`${process.env.NEXT_PUBLIC_HOST}/api/comment/${commentId}`)
         .then(res => {
             console.log('Deleted!');
             Router.push('/')
@@ -37,7 +37,7 @@ const deleteComment = async (commentId: number) => {
 }
 const updateComment = async (commentId: number, content: string, setMode: Dispatch<SetStateAction<'edit' | 'view'>>) => {
     if (content) {
-        axios.put(`http://localhost:3000/api/comment/${commentId}`, { content })
+        axios.put(`${process.env.NEXT_PUBLIC_HOST}/api/comment/${commentId}`, { content })
             .then(res => {
                 console.log('Updated!');
                 setMode('view')
@@ -49,7 +49,7 @@ const updateComment = async (commentId: number, content: string, setMode: Dispat
     }
 }
 const upVoteComment = async (commentId: number) => {
-    axios.patch(`http://localhost:3000/api/comment/${commentId}`, { voteType: 'up' })
+    axios.patch(`${process.env.NEXT_PUBLIC_HOST}/api/comment/${commentId}`, { voteType: 'up' })
         .then(res => {
             console.log('Upvoted!');
             Router.push('/')
@@ -57,7 +57,7 @@ const upVoteComment = async (commentId: number) => {
         .catch(err => console.log(err))
 }
 const downVoteComment = async (commentId: number) => {
-    axios.patch(`http://localhost:3000/api/comment/${commentId}`, { voteType: 'down' })
+    axios.patch(`${process.env.NEXT_PUBLIC_HOST}/api/comment/${commentId}`, { voteType: 'down' })
         .then(res => {
             console.log('downvoted!');
             Router.push('/')
