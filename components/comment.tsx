@@ -9,6 +9,7 @@ import { useUser } from '../context/userContext';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 
 import useCommentStore from '../hooks/useCommentStore';
+import DeleteModal from './DeleteModal';
 
 
 const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
@@ -22,6 +23,8 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
     const [date, setDate] = useState<Date>()
     const { deleteComment, updateComment, upVoteComment, downVoteComment } = useCommentStore();
     const [mode, setMode] = useState<'edit' | 'view'>('view');
+
+    const [showModal, setShowModal] = useState(false);
 
     const fetchUser = async () => {
         const res = await axios.get(`http://localhost:3000/api/user/${comment.authorId}`)
@@ -54,11 +57,12 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
             </div>
         )
     }
+
     const ButtonPanel = () => {
         if (comment.authorId === user.id) {
             return (
                 <div className='flex'>
-                    <button className='replyBtn text-soft-red hover:text-pale-red' onClick={() => deleteComment(comment.commentId)}>
+                    <button className='replyBtn text-soft-red hover:text-pale-red' onClick={() => setShowModal(true)}>
                         <FaTrash className='mr-2' />
                         Delete
                     </button>
@@ -96,7 +100,7 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
             return null
         }
         return (
-            <div className='flex mt-4'>
+            <div className='flex'>
                 <div className='border-2 border-white ml-4 mr-4' />
                 <div className='w-full'>
                     {   // @ts-ignore -- disable error next line
@@ -147,13 +151,14 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
         )
     }
     return (
-        <div>
+        <>
             <div className="bg-white flex p-4 flex-col sm:flex-row rounded-lg">
                 {!isMobileSize && <VoteButton />}
                 <Detail />
             </div>
             <SubComment />
-        </div>
+            {showModal && <DeleteModal onConfirm={() => deleteComment(comment.commentId)} showModal={showModal} setShowModal={setShowModal} />}
+        </>
     )
 
 }

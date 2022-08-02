@@ -5,11 +5,10 @@ import CommentPanel from '../components/comment'
 import { commentProp, userProp } from '../types'
 import CreatePanel from '../components/CreatePanel'
 import { useUser } from '../context/userContext'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const Home: NextPage<{ comments: commentProp[], currentUser: userProp }> = ({ comments, currentUser }) => {
   const { user, setUser } = useUser();
-
   useEffect(() => {
     setUser(currentUser)
     // eslint-disable-next-line react-hooks/exhaustive-deps
