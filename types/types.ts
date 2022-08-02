@@ -5,4 +5,5 @@ export interface commentProp extends Comment {
 export interface userProp {
     id: number,
     username: string,
+    imageUrl: string,
 }

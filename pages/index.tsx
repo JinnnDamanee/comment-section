@@ -35,7 +35,6 @@ export async function getServerSideProps() {
 
   const resUser = await axios.get('http://localhost:3000/api/user/currentUser')
   const currentUser = resUser.data
-  // console.log(currentUser);
 
   return {
     props: {

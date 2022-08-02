@@ -11,10 +11,9 @@ import { useMediaQuery } from '../hooks/useMediaQuery';
 import useCommentStore from '../hooks/useCommentStore';
 import DeleteModal from './DeleteModal';
 
-
 const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
 
-    const { user, setUser } = useUser();
+    const { user } = useUser();
     const isMobileSize: Boolean = useMediaQuery(640);
 
     const [username, setUsername] = useState('Loading...');

@@ -2,11 +2,12 @@ import { createContext, useContext, ReactNode, useState } from "react";
 
 const defaultUser = {
     id: 0,
-    username: 'anonymous'
+    username: 'anonymous',
+    imageUrl: 'www.test.com'
 }
 const defaultContext = {
     user: defaultUser,
-    setUser: (user: { id: number, username: string }) => { }
+    setUser: (user: { id: number, username: string, imageUrl: string }) => { }
 }
 
 const UserContext = createContext(defaultContext)
