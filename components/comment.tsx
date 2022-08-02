@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { FaReply, FaTrash, FaPen } from 'react-icons/fa'
 import { commentProp } from '../types';
 import axios from 'axios';
@@ -97,7 +97,8 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
             </div>
         )
     }
-    const SubComment = () => {
+
+    const SubComment = useCallback(() => {
         if (comment.replys.length === 0) {
             return null
         }
@@ -113,7 +114,8 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
                 </div>
             </div>
         )
-    }
+    }, [comment.replys])
+
     const Detail = () => {
         // Put EditContent here to prevent re-rendering
         const [editContent, setEditContent] = useState(comment.content);
