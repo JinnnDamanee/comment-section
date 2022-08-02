@@ -6,10 +6,6 @@ import axios from 'axios';
 import { User } from '@prisma/client';
 import { useUser } from '../context/userContext';
 
-import amyImg from '../images/avatars/image-amyrobson.webp'
-import juliomoImg from '../images/avatars/image-juliusomo.webp'
-import maxblagunImg from '../images/avatars/image-maxblagun.webp'
-import ramsesmironImg from '../images/avatars/image-ramsesmiron.webp'
 import { useMediaQuery } from '../hooks/useMediaQuery';
 
 import useCommentStore from '../hooks/useCommentStore';
@@ -21,7 +17,7 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
     const isMobileSize: Boolean = useMediaQuery(640);
 
     const [username, setUsername] = useState('Loading...');
-    const [image, setImage] = useState(amyImg);
+    const [imageUrl, setImageUrl] = useState('https://raw.githubusercontent.com/JinDamanee2544/comment-section/main/images/avatars/image-amyrobson.webp');
     const [isReady, setIsReady] = useState(false);
     const [date, setDate] = useState<Date>()
     const { deleteComment, updateComment, upVoteComment, downVoteComment } = useCommentStore();
@@ -31,9 +27,8 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
         const res = await axios.get(`http://localhost:3000/api/user/${comment.authorId}`)
         const user: User = res.data;
         setUsername(user.username)
-        imageSwitch(user.username)
+        setImageUrl(user.imageUrl)
         setIsReady(true)
-        //setImage(user.image) cannot access src folder
     }
 
     useEffect(() => {
@@ -83,32 +78,13 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
         }
     }
 
-    // Mock Database Image (CDN) 
-    // bcz next/Image can't access to source folder (eg. Image Folder)  
-    const imageSwitch = (username: string) => {
-        if (username === 'isLoading...') return;
-
-        if (username === 'amyrobson') {
-            setImage(amyImg)
-        }
-        if (username === 'juliusomo') {
-            setImage(juliomoImg)
-        }
-        if (username === 'maxblagun') {
-            setImage(maxblagunImg)
-        }
-        if (username === 'ramsesmiron') {
-            setImage(ramsesmironImg)
-        }
-    }
-
     const Header = () => {
         // date.toLocaleString()         // 5/12/2020, 6:50:21 PM
         // date.toLocaleDateString()     // 5/12/2020
         // date.toLocaleTimeString()     // 6:50:21 PM
         return (
             <div className='flex items-center flex-shrink-0'>
-                <Image src={image} alt='amy' height={30} width={30} />
+                <Image src={imageUrl} alt='amy' height={30} width={30} />
                 <h1 className='mx-2 font-bold text-medium-blue'>{username}</h1>
                 {comment.authorId === user.id && <span className='bg-medium-blue text-white text-sm p-1 rounded'>You</span>}
                 <h1 className='mx-2 text-grayish-blue'>{date?.toLocaleDateString()}</h1>
