@@ -10,6 +10,7 @@ import { useMediaQuery } from '../hooks/useMediaQuery';
 
 import useCommentStore from '../hooks/useCommentStore';
 import DeleteModal from './DeleteModal';
+import ReplySection from './ReplySection';
 
 const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
 
@@ -24,6 +25,7 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
     const [mode, setMode] = useState<'edit' | 'view'>('view');
 
     const [showModal, setShowModal] = useState(false);
+    const [showReply, setShowReply] = useState(false);
 
     const fetchUser = async () => {
         const res = await axios.get(`http://localhost:3000/api/user/${comment.authorId}`)
@@ -73,7 +75,8 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
             )
         } else {
             return (
-                <button className='replyBtn'>
+                <button className='replyBtn'
+                    onClick={() => setShowReply(!showReply)} >
                     <FaReply className='mr-2' />
                     Reply
                 </button>
@@ -100,8 +103,8 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
         }
         return (
             <div className='flex'>
-                <div className='border-2 border-white ml-4 mr-4' />
-                <div className='w-full'>
+                <div className='border-2 border-light-gray ml-4 mr-4' />
+                <div className='w-full flex flex-col gap-y-4'>
                     {   // @ts-ignore -- disable error next line
                         comment.replys.map((reply: commentProp, idx) => {
                             return <CommentPanel key={idx} comment={reply} />
@@ -155,6 +158,7 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
                 {!isMobileSize && <VoteButton />}
                 <Detail />
             </div>
+            {showReply && <ReplySection comment={comment} setShowReply={setShowReply} />}
             <SubComment />
             {showModal && <DeleteModal onConfirm={() => deleteComment(comment.commentId)} showModal={showModal} setShowModal={setShowModal} />}
         </>

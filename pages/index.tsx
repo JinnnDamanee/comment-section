@@ -15,7 +15,7 @@ const Home: NextPage<{ comments: commentProp[], currentUser: userProp }> = ({ co
   }, [])
 
   return (
-    <div className='bg-medium-blue h-full p-4 text-dark-blue min-h-screen flex flex-col justify-center items-center'>
+    <div className='bg-very-light-gray h-full p-4 text-dark-blue min-h-screen flex flex-col justify-center items-center'>
       <main className='container min-w-[300px] max-w-2xl grid gap-4'>
         {
           comments.map((comment: commentProp, id) => {

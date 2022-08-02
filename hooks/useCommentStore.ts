@@ -1,14 +1,26 @@
 import axios from 'axios';
 import Router from 'next/router';
 import { Dispatch, SetStateAction } from 'react';
-import { commentProp } from '../types';
 
 const createPost = (content: string, id: number, setContent: Dispatch<string>) => {
     if (content) {
-        axios.post('http://localhost:3000/api/comment', { content, userId: id })
+        axios.post('http://localhost:3000/api/comment', { content, userId: id, replyTo: null })
             .then(res => {
                 Router.push('/')
                 setContent('')
+            })
+            .catch(err => console.log(err))
+    } else {
+        console.log('Please enter a comment');
+    }
+}
+const replyPost = (content: string, id: number, setContent: Dispatch<string>, setShowReply: Dispatch<boolean>, replyTo: number) => {
+    if (content) {
+        axios.post('http://localhost:3000/api/comment', { content, userId: id, replyTo })
+            .then(res => {
+                Router.push('/')
+                setContent('')
+                setShowReply(false)
             })
             .catch(err => console.log(err))
     } else {
@@ -55,6 +67,7 @@ const downVoteComment = async (commentId: number) => {
 const useCommentStore = () => {
     return {
         createPost,
+        replyPost,
         deleteComment,
         updateComment,
         upVoteComment,
