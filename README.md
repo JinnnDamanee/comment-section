@@ -1,11 +1,18 @@
+
 # Comment Section
 
-Challenge and its design from Frontend Mentor
+CRUD Responsive comment section\
+(Challenge and Design from Frontend Mentor)
 
-## Todo
+## Tech Stack
 
-- reply other comment Section
+Next.JS + Tailwindcss + Prisma + Railway (Hosting Database) + Vercel (Hosting Web Server) 
 
-## Deploy 
+## Deploy
 
-Wait till finished!
+Vercel :  http://comment-section-three.vercel.app/ (if my subscription isn't expired XD)
+## Screenshot
+
+Desktop            |  Mobile
+:-------------------------:|:-------------------------:
+![](https://raw.githubusercontent.com/JinDamanee2544/comment-section/main/Screenshot/Web-view.png)  |  ![](https://raw.githubusercontent.com/JinDamanee2544/comment-section/main/Screenshot/mobile-view.png)
