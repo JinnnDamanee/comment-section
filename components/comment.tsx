@@ -67,7 +67,7 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
                         <FaTrash className='mr-2' />
                         Delete
                     </button>
-                    <button className='replyBtn' onClick={() => setMode('edit')}>
+                    <button className='replyBtn' onClick={() => setMode(mode === 'edit' ? 'view' : 'edit')}>
                         <FaPen className='mr-2' />
                         Edit
                     </button>
@@ -160,7 +160,7 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
                 {!isMobileSize && <VoteButton />}
                 <Detail />
             </div>
-            {showReply && <ReplySection comment={comment} setShowReply={setShowReply} />}
+            {showReply && <ReplySection commentTo={comment} setShowReply={setShowReply} />}
             <SubComment />
             {showModal && <DeleteModal onConfirm={() => deleteComment(comment.commentId)} showModal={showModal} setShowModal={setShowModal} />}
         </>

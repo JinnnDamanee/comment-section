@@ -1,4 +1,3 @@
-import { Comment } from '@prisma/client';
 import { NextApiHandler } from 'next';
 import { prisma } from '../../../data/prisma';
 
@@ -30,9 +29,9 @@ const voteHandler: NextApiHandler = async (req, res) => {
             })
             voteMessage = 'Downvoted!'
         }
-        res.status(200).json({ message: voteMessage })
+        return res.status(200).json({ message: voteMessage })
     } catch (error) {
-        res.status(404).json({ message: 'Comment not found' })
+        return res.status(404).json({ message: 'Comment not found' })
     }
 
 }
@@ -45,9 +44,9 @@ const handler: NextApiHandler = async (req, res) => {
                     commentId: Number(req.query.id)
                 }
             })
-            res.status(200).json({ message: 'Comment deleted' });
+            return res.status(200).json({ message: 'Comment deleted' });
         } catch (error) {
-            res.status(400).json({ message: 'Comment not found' })
+            return res.status(400).json({ message: 'Comment not found' })
         }
     }
     if (req.method === 'PUT') {
@@ -60,9 +59,9 @@ const handler: NextApiHandler = async (req, res) => {
                     content: req.body.content
                 }
             })
-            res.status(200).json({ message: 'Comment updated', newComment: comment });
+            return res.status(200).json({ message: 'Comment updated', newComment: comment });
         } catch (error) {
-            res.status(400).json({ message: 'Comment not found' })
+            return res.status(400).json({ message: 'Comment not found' })
         }
     }
     if (req.method === 'PATCH') {
