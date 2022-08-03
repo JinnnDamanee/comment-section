@@ -28,7 +28,7 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
     const [showReply, setShowReply] = useState(false);
 
     const fetchUser = async () => {
-        const res = await axios.get(`http://localhost:3000/api/user/${comment.authorId}`)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/user/${comment.authorId}`)
         const user: User = res.data;
         setUsername(user.username)
         setImageUrl(user.imageUrl)
