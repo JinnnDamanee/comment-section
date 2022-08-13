@@ -6,6 +6,7 @@ import { commentProp, userProp } from '../types'
 import CreatePanel from '../components/CreatePanel'
 import { useUser } from '../context/userContext'
 import { useEffect, useState } from 'react'
+import Head from 'next/head'
 
 const Home: NextPage<{ comments: commentProp[], currentUser: userProp }> = ({ comments, currentUser }) => {
   const { user, setUser } = useUser();
@@ -15,16 +16,25 @@ const Home: NextPage<{ comments: commentProp[], currentUser: userProp }> = ({ co
   }, [])
 
   return (
-    <div className='bg-very-light-gray h-full p-4 text-dark-blue min-h-screen flex flex-col justify-center items-center'>
-      <main className='container min-w-[300px] max-w-2xl grid gap-4'>
-        {
-          comments.map((comment: commentProp, id) => {
-            return <CommentPanel key={id} comment={comment} />
-          })
-        }
-        <CreatePanel />
-      </main>
-    </div>
+    <>
+      <Head>
+        <title>Comment Section</title>
+        <meta
+          name="description"
+          content="comment-section-app (CRUD) with Next.JS,Tailwindcss,Prisma and Railway"
+        />
+      </Head>
+      <div className='bg-very-light-gray h-full p-4 text-dark-blue min-h-screen flex flex-col justify-center items-center'>
+        <main className='container min-w-[300px] max-w-2xl grid gap-4'>
+          {
+            comments.map((comment: commentProp, id) => {
+              return <CommentPanel key={id} comment={comment} />
+            })
+          }
+          <CreatePanel />
+        </main>
+      </div>
+    </>
   )
 }
 

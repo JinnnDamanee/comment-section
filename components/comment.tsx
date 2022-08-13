@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, memo, useMemo, useState } from 'react';
 import { FaReply, FaTrash, FaPen } from 'react-icons/fa'
 import { commentProp } from '../types';
 import axios from 'axios';
@@ -18,8 +18,8 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
     const isMobileSize: Boolean = useMediaQuery(640);
 
     const [username, setUsername] = useState('Loading...');
-    const [imageUrl, setImageUrl] = useState('https://raw.githubusercontent.com/JinDamanee2544/comment-section/main/images/avatars/image-amyrobson.webp');
-    const [isReady, setIsReady] = useState(false);
+    const [imageUrl, setImageUrl] = useState('https://raw.githubusercontent.com/JinDamanee2544/comment-section/main/images/avatars/image-amyrobson.webp');  // default image
+    // const [isReady, setIsReady] = useState(false);
     const [date, setDate] = useState<Date>()
     const { deleteComment, updateComment, upVoteComment, downVoteComment } = useCommentStore();
     const [mode, setMode] = useState<'edit' | 'view'>('view');
@@ -32,7 +32,7 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
         const user: User = res.data;
         setUsername(user.username)
         setImageUrl(user.imageUrl)
-        setIsReady(true)
+        // setIsReady(true)
     }
 
     useEffect(() => {
@@ -59,7 +59,7 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
         )
     }
 
-    const ButtonPanel = () => {
+    const ButtonPanel = useCallback(() => {
         if (comment.authorId === user.id) {
             return (
                 <div className='flex'>
@@ -82,9 +82,10 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
                 </button>
             )
         }
-    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [mode])
 
-    const Header = () => {
+    const Header = useCallback(() => {
         // date.toLocaleString()         // 5/12/2020, 6:50:21 PM
         // date.toLocaleDateString()     // 5/12/2020
         // date.toLocaleTimeString()     // 6:50:21 PM
@@ -96,7 +97,8 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
                 <h1 className='mx-2 text-grayish-blue'>{date?.toLocaleDateString()}</h1>
             </div>
         )
-    }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [imageUrl, username])
 
     const SubComment = useCallback(() => {
         if (comment.replys.length === 0) {
@@ -114,7 +116,8 @@ const CommentPanel: React.FC<{ comment: commentProp }> = ({ comment }) => {
                 </div>
             </div>
         )
-    }, [comment.replys])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [JSON.stringify(comment.replys)])
 
     const Detail = () => {
         // Put EditContent here to prevent re-rendering
