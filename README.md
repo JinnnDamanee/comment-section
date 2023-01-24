@@ -6,11 +6,28 @@ CRUD Responsive comment section\
 
 ## Tech Stack
 
-Next.JS + Tailwindcss + Prisma + Railway (Hosting Database) + Vercel (Hosting Web Server) 
+Next.JS + Tailwindcss + Prisma + Vercel (Hosting Web Server) 
 
-## Deploy
+## Deploy (deprecated)
 
 Vercel :  http://comment-section-three.vercel.app/ (if my subscription isn't expired XD)
+
+
+## Deploy with Container
+
+- spin up the database container
+
+```
+    docker-compose up -d
+```
+
+- seed the database
+
+```
+    npx prisma db seed
+```
+
+
 ## Screenshot
 
 Desktop            |  Mobile
